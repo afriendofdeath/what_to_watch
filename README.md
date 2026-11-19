@@ -1,42 +1,48 @@
-### Как запустить проект:
+# what_to_watch
 
-Клонировать репозиторий и перейти в него в командной строке:
+Flask-приложение со случайными мнениями о фильмах.
 
-```
-git clone 
-```
+## Установка и запуск (Windows / Git Bash)
 
-```
-cd what_to_watch
-```
+Перейдите в каталог проекта и создайте виртуальное окружение:
 
-Cоздать и активировать виртуальное окружение:
-
-```
-python3 -m venv venv
+```bash
+python -m venv venv
+source venv/Scripts/activate
 ```
 
-```
-source venv/bin/activate
-```
-или для пользователей Windows
+Установите зависимости:
 
-```
-source env/Scripts/activate
-```
-
-Установить зависимости из файла requirements.txt:
-
-```
-python3 -m pip install --upgrade pip
-```
-
-```
+```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Запустить проект:
+Скопируйте `.env.example` в `.env` (если `.env` ещё не создан) и задайте собственное значение `SECRET_KEY`.
 
-```
+Примените миграции и запустите приложение:
+
+```bash
+flask db upgrade
 flask run
 ```
+
+Откройте http://127.0.0.1:5000/.
+
+## Загрузка мнений
+
+Если база данных ещё не содержит мнений, выполните:
+
+```bash
+flask load_opinions
+```
+
+Команда читает `opinions.csv` из корневого каталога проекта.
+
+## Структура
+
+- `opinions_app/` — пакет приложения: модели, формы, маршруты, обработчики ошибок и CLI-команды.
+- `settings.py` — конфигурация Flask.
+- `.env` — локальные переменные окружения (не добавляется в Git).
+- `migrations/` — миграции базы данных.
+- `backup/opinions_app.py` — резервная копия исходного монолитного модуля.
